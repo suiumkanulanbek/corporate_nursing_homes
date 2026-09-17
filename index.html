@@ -1,0 +1,493 @@
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Ownership Changes Are Reshaping Nursing Home Care</title>
+<meta name="description" content="An investigation into how for-profit ownership and private-equity consolidation are affecting the quality of care in U.S. nursing homes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --paper: #ECE9E1;
+        --paper-raised: #F6F4EE;
+        --ink: #1C1B17;
+        --ink-soft: #5A5748;
+        --accent: #A6392B;
+        --folder: #4B5D45;
+        --rule: #CDC7B7;
+    }
+    * { box-sizing: border-box; }
+    body {
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: 'Public Sans', sans-serif;
+        margin: 0;
+        line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: 'Spectral', serif; font-weight: 600; color: var(--ink); }
+    a { color: var(--accent); }
+
+    header.masthead {
+        border-bottom: 1px solid var(--rule);
+        padding: 16px 24px;
+    }
+    header.masthead a.back {
+        text-decoration: none;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.82em;
+        color: var(--ink-soft);
+    }
+    header.masthead a.back:hover { color: var(--accent); }
+
+    .article-wrap {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    .hero {
+        max-width: 680px;
+        margin: 56px auto 40px;
+        padding: 0 24px;
+    }
+    .kicker {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.78em;
+        color: var(--accent);
+        margin: 0 0 10px;
+    }
+    .hero h1 {
+        font-size: 2.3em;
+        line-height: 1.18;
+        margin: 0 0 18px;
+    }
+    .byline {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.78em;
+        color: var(--ink-soft);
+    }
+
+    p { font-size: 1.06em; margin: 0 0 20px; }
+
+    .inline-chart {
+        background-color: var(--paper-raised);
+        border: 1px solid var(--rule);
+        border-left: 3px solid var(--accent);
+        padding: 22px 24px;
+        margin: 32px 0;
+    }
+    .inline-chart .chart-label {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.72em;
+        color: var(--ink-soft);
+        margin-bottom: 14px;
+    }
+    .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .bar-row .bar-name { width: 190px; font-size: 0.86em; flex-shrink: 0; }
+    .bar-track { flex-grow: 1; background: var(--rule); height: 20px; position: relative; }
+    .bar-fill { background: var(--accent); height: 100%; }
+    .bar-fill.muted { background: var(--folder); }
+    .bar-value {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.82em;
+        margin-left: 8px;
+        white-space: nowrap;
+    }
+
+    h2.section-title {
+        font-size: 1.7em;
+        margin: 56px 0 20px;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 10px;
+    }
+
+    footer.end {
+        max-width: 680px;
+        margin: 60px auto 80px;
+        padding: 0 24px;
+        border-top: 1px solid var(--rule);
+        padding-top: 20px;
+    }
+    footer.end p {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.78em;
+        color: var(--ink-soft);
+    }
+
+    .disclaimer {
+        max-width: 680px;
+        margin: 0 auto 60px;
+        padding: 16px 24px;
+    }
+    .disclaimer p {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.72em;
+        color: var(--ink-soft);
+        margin: 0;
+        border-top: 1px solid var(--rule);
+        padding-top: 16px;
+    }
+
+    /* ---------- Scrollytelling ---------- */
+    .scrolly-intro { max-width: 680px; margin: 0 auto 20px; padding: 0 24px; }
+    .scrolly {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+        gap: 40px;
+    }
+    .scrolly-graphic-wrap {
+        position: sticky;
+        top: 60px;
+        height: 460px;
+        align-self: start;
+    }
+    .scrolly-graphic {
+        background-color: var(--paper-raised);
+        border: 1px solid var(--rule);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .chart-panel {
+        position: absolute;
+        inset: 0;
+        padding: 28px;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+    }
+    .chart-panel.visible { opacity: 1; }
+    .chart-title {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.76em;
+        color: var(--ink-soft);
+        margin-bottom: 18px;
+    }
+    .chart-note {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.68em;
+        color: var(--ink-soft);
+        margin-top: auto;
+        padding-top: 10px;
+    }
+
+    .scrolly-steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+        min-height: 74vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 18px;
+        opacity: 0.35;
+        transition: opacity 0.3s ease;
+    }
+    .step.active { opacity: 1; }
+    .step p {
+        font-size: 1.1em;
+        line-height: 1.55;
+        background-color: var(--paper-raised);
+        border: 1px solid var(--rule);
+        padding: 22px 24px;
+        margin: 0;
+    }
+
+    /* Big-stat panel */
+    .big-stat { text-align: center; margin: auto; }
+    .big-stat .num {
+        font-family: 'Spectral', serif;
+        font-weight: 700;
+        font-size: 3.6em;
+        color: var(--accent);
+        line-height: 1;
+    }
+    .big-stat .label { font-size: 0.9em; color: var(--ink-soft); margin-top: 8px; }
+
+    /* Log-scale two-bar chart */
+    .log-chart { display: flex; align-items: flex-end; gap: 60px; height: 260px; margin: auto 0; padding: 0 10px; }
+    .log-bar-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; flex: 1; }
+    .log-bar { width: 56px; background: var(--accent); }
+    .log-bar.dim { background: var(--folder); }
+    .log-bar-value { font-family: 'IBM Plex Mono', monospace; font-size: 0.86em; margin-bottom: 6px; }
+    .log-bar-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.78em; color: var(--ink-soft); margin-top: 8px; }
+
+    /* Paired comparison chart */
+    .pair-chart { display: flex; gap: 32px; height: 260px; align-items: flex-end; margin: auto 0; }
+    .pair-group { flex: 1; display: flex; gap: 14px; align-items: flex-end; justify-content: center; height: 100%; position: relative; }
+    .pair-bar-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .pair-bar { width: 42px; background: var(--folder); }
+    .pair-bar.investor { background: var(--accent); }
+    .pair-bar-value { font-family: 'IBM Plex Mono', monospace; font-size: 0.74em; margin-bottom: 4px; }
+    .pair-bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68em; color: var(--ink-soft); margin-top: 6px; text-align: center; }
+    .baseline { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--ink-soft); }
+
+    /* Timeline (case scene) */
+    .timeline { display: flex; flex-direction: column; gap: 16px; margin: auto 0; }
+    .timeline-item { display: flex; gap: 12px; align-items: flex-start; }
+    .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex-shrink: 0; }
+    .timeline-dot.muted { background: var(--folder); }
+    .timeline-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.7em; color: var(--ink-soft); margin-bottom: 2px; }
+    .timeline-text { font-size: 0.88em; }
+
+    /* Mechanism diagram */
+    .diagram { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: auto 0; }
+    .diagram-box { border: 1px solid var(--rule); background: var(--paper); padding: 10px 16px; font-size: 0.82em; text-align: center; width: 210px; }
+    .diagram-box.highlight { border-color: var(--accent); color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 0.74em; }
+    .diagram-arrow { font-size: 0.78em; color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; text-align: center; }
+
+    /* Split panel (complication) */
+    .split-panel { display: flex; gap: 14px; height: 100%; margin: auto 0; }
+    .split-side { flex: 1; padding: 14px; border: 1px solid var(--rule); }
+    .split-side.industry { border-top: 3px solid var(--folder); }
+    .split-side.research { border-top: 3px solid var(--accent); }
+    .split-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.66em; color: var(--ink-soft); margin-bottom: 8px; }
+    .split-side p { font-size: 0.8em; margin: 0 0 8px; }
+
+    /* Closing panel */
+    .closing-panel { text-align: center; margin: auto; }
+    .closing-panel .names { font-family: 'Spectral', serif; font-size: 1.25em; margin-bottom: 6px; }
+    .closing-panel .sep { color: var(--rule); margin: 0 8px; }
+    .closing-panel .note { font-size: 0.82em; color: var(--ink-soft); margin-top: 12px; }
+
+    @media (max-width: 860px) {
+        .scrolly { grid-template-columns: 1fr; }
+        .scrolly-graphic-wrap { position: sticky; top: 0; height: 340px; margin-bottom: 10px; }
+        .step { min-height: auto; padding: 30px 0; }
+    }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+    <a class="back" href="https://suiumkanulanbek.github.io">&larr; Suiumkan Ulanbek</a>
+</header>
+
+<div class="hero">
+    <p class="kicker">Investigation &middot; Healthcare</p>
+    <h1>How Ownership Changes Are Reshaping Nursing Home Care</h1>
+    <p class="byline">By Suiumkan Ulanbek</p>
+</div>
+
+<div class="article-wrap">
+
+<p>In May 2026, Matthew Percharich called for a full investigation into his father's death at a nursing home in Texas.</p>
+
+<p>Robert Percharich, 81, died on May 3 at Bluebonnet Point Wellness in Bullard, Texas, following a major injury in early April. He had been diagnosed with vascular dementia six years earlier. His son accused the facility of neglecting his father's care, alleging that it was short-staffed and unable to provide timely attention to residents.</p>
+
+<p>Bluebonnet Point Wellness is not an isolated case. Nursing homes across the country are frequently accused of neglect and understaffing, and Bluebonnet Point Wellness has real numbers behind the complaint: the Centers for Medicare & Medicaid Services (CMS) rates its staffing 1 out of 5. Staffing isn't its only problem: the facility currently owes $181,000 in fines and faces several additional penalties.</p>
+
+<p>Like many nursing homes, Bluebonnet Point Wellness is owned by a for-profit company, Creative Solutions in Healthcare. The company operates 149 facilities in Texas, which average 2.2 serious deficiencies per home, three times the national average of 0.7. Its facilities are fined an average of $69,367 each, double the national average, and one of its homes carries the federal government's Special Focus Facility designation, reserved for nursing homes with a persistent history of serious quality problems.</p>
+
+<div class="inline-chart">
+    <div class="chart-label">Creative Solutions in Healthcare vs. national average</div>
+    <div class="bar-row">
+        <div class="bar-name">Serious deficiencies / home</div>
+        <div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div>
+        <div class="bar-value">2.2</div>
+    </div>
+    <div class="bar-row">
+        <div class="bar-name">National average</div>
+        <div class="bar-track"><div class="bar-fill muted" style="width: 31.8%;"></div></div>
+        <div class="bar-value">0.7</div>
+    </div>
+    <div class="bar-row" style="margin-top: 16px;">
+        <div class="bar-name">Avg. fine / home</div>
+        <div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div>
+        <div class="bar-value">$69,367</div>
+    </div>
+    <div class="bar-row">
+        <div class="bar-name">National average</div>
+        <div class="bar-track"><div class="bar-fill muted" style="width: 50%;"></div></div>
+        <div class="bar-value">~$34,684</div>
+    </div>
+</div>
+
+<p>In a CMS analysis ranking the worst-performing nursing home companies by quality of care, staffing, and inspection results, Creative Solutions in Healthcare placed fourth.</p>
+
+<p>Genesis Healthcare, another company on that list, has faced its own share of trouble in recent years. According to the <a href="https://cepr.net/publications/inside-the-genesis-private-equity-bankruptcy-case/" target="_blank">Center for Economic and Policy Research</a>, Genesis was charged $14 million in nursing home violations and $2.4 million in employment-related violations between 2011 and 2025. In 2017, it paid $54.2 million to settle claims that it had fraudulently overcharged Medicare and Medicaid. By the time it filed for bankruptcy in July 2025, the company was spending $8 million a month on litigation and settlements.</p>
+
+<p>CMS rated 58% of Genesis homes below average or much below average on its five-star system, fined Genesis facilities a combined $10 million over three years, and Connecticut regulators closed two of its facilities over safety concerns. At its peak in 2016, Genesis operated more than 500 nursing homes, funded through leveraged buyouts and real estate sale-leasebacks with Welltower, a real estate investment trust.</p>
+
+<p>Ciena Healthcare's record is not far behind. According to the Nursing Home Law Center, Ciena facilities have received more than 60 violation citations resulting in CMS fines since 2022, ranging from several thousand dollars to hundreds of thousands for the most severe cases. Several of those violations have involved fatalities from injuries sustained inside its facilities.</p>
+
+</div>
+
+<h2 class="section-title" style="max-width: 680px; margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px;">The Corporate Takeover of Nursing Homes</h2>
+
+<div class="scrolly-intro">
+    <p>Bluebonnet Point Wellness, Genesis, and Ciena are symptoms of a broader shift in who owns America's nursing homes, and what that ownership means for the people living in them.</p>
+</div>
+
+<div class="scrolly">
+    <div class="scrolly-steps">
+
+        <div class="step" data-step="1">
+            <p>In September 2024, the private equity firm Cascade Capital Group <a href="https://iowacapitaldispatch.com/2024/10/21/private-equity-firm-buys-29-iowa-nursing-homes-in-massive-85-million-deal/" target="_blank">acquired one of Iowa's largest nursing home chains</a> (29 facilities and 2,346 skilled-nursing beds) for $85 million, handing 7% of the state's nursing homes to a single investor. A Cascade affiliate, Legacy Healthcare, took over management.</p>
+            <p>A month later, <a href="https://iowacapitaldispatch.com/2024/12/05/woman-dies-at-iowa-nursing-home-recently-acquired-by-private-equity-firm/" target="_blank">Christine Beenken, a 45-year-old resident</a> of one of those homes, Harmony House Health Care Center in Waterloo, died. She had dietary restrictions limiting her to soft, bite-sized food; state inspectors found she had choked after putting an entire peanut butter and jelly sandwich in her mouth at once. Investigators concluded staff had failed to put in place a behavioral intervention plan that might have prevented it. The state fined the facility $10,000. As of this year, the fine remains unpaid.</p>
+        </div>
+
+        <div class="step" data-step="2">
+            <p>Harmony House is one data point in a wave of ownership changes that has swept through the nursing home industry at a pace unmatched by almost any other part of healthcare: <a href="https://www.mcknights.com/?p=121006" target="_blank">more than 3,000 skilled nursing facilities changed hands between 2016 and 2021, compared with just 347 hospitals</a> over the same period, according to CMS data reported to the Department of Health and Human Services. Among facilities that started out non-profit, <a href="https://skillednursingnews.com/2022/04/closures-consolidation-sales-skilled-nursing-ownership-goes-through-shakeup/" target="_blank">sale to a for-profit buyer was the single most common outcome</a>.</p>
+            <p>Just how much of that consolidation involves private equity specifically is harder to pin down, even for the federal government. The <a href="https://gao.gov/products/gao-23-106163" target="_blank">Government Accountability Office estimated in 2022 that private equity firms owned about 5%</a> of the nation's roughly 14,800 nursing homes, while <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7593807/" target="_blank">a Weill Cornell study put the 2020 figure at 4.7%</a>. A <a href="https://www.mcknights.com/news/private-equity-can-help-stabilize-nursing-homes-finds-review-of-outcomes-over-24-years/" target="_blank">2025 systematic review found the share had grown from just 1% in 2005 to as much as 13% by 2021</a>. GAO itself has said CMS's ownership data is too incomplete to know the real number: many nursing homes simply don't report all of their owners.</p>
+        </div>
+
+        <div class="step" data-step="3">
+            <p>The financial engineering behind these deals follows a familiar pattern, one visible in Genesis Healthcare's own history. <a href="https://cepr.net/publications/inside-the-genesis-private-equity-bankruptcy-case/" target="_blank">At its peak in 2016, Genesis operated more than 500 nursing homes</a>, built through a leveraged buyout and a sale-leaseback of its real estate to Welltower, a real estate investment trust. In a sale-leaseback, an operator sells its buildings to a landlord (often an affiliated REIT), then leases the same buildings back at a fixed rent. The transaction extracts cash from the business immediately, but it also converts what was once a fixed asset into a recurring expense the operating company has to cover every month, whether or not the beds are full.</p>
+            <p>Layer enough of these deals (buyouts financed with debt, management fees paid to affiliated companies, real estate spun off into separate entities) and the money a nursing home takes in from Medicare and Medicaid has more places to go before it ever reaches a nurse's paycheck. <a href="https://cepr.net/publications/inside-the-genesis-private-equity-bankruptcy-case/" target="_blank">Genesis was spending $8 million a month on litigation and settlements</a> before it filed for bankruptcy in July 2025.</p>
+        </div>
+
+        <div class="step" data-step="4">
+            <p>The clearest evidence that this matters for patients comes from a <a href="https://www.nber.org/papers/w28474" target="_blank">2024 study in The Review of Financial Studies</a>, led by economists at NYU, Penn, and the University of Chicago. Examining Medicare records for more than 18,000 nursing homes, including roughly 1,700 acquired by private equity firms between 2000 and 2017, the researchers found that going to a PE-owned facility increased a resident's short-term mortality by 10% during the stay and for 90 days after, while Medicare spending over the same period rose 11%. Nurse staffing and compliance with Medicare standards both declined after acquisition.</p>
+        </div>
+
+        <div class="step" data-step="5">
+            <p>The industry disputes how much of this is really about ownership. <a href="https://skillednursingnews.com/2025/04/divergent-views-on-private-equitys-influence-in-nursing-homes-amid-reports-of-risky-financial-decisions-and-opaque-ownership-structures/" target="_blank">The American Health Care Association, nursing homes' largest trade group, argues private equity plays a "minimal role"</a> in the sector (owning under 5% of facilities, with the ten largest operators controlling just over a tenth of the nation's beds), and says the real driver of poor conditions is chronic Medicaid underfunding, not who signs the deed. A <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7593807/" target="_blank">2020 study in JAMA Network Open</a>, examining the pandemic's first wave, found no statistically significant difference in COVID-19 case or death rates between PE-owned and other nursing homes.</p>
+            <p>Even the <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12759388/" target="_blank">2025 systematic review</a> that found PE ownership linked to worse outcomes noted that some private equity investors bring real capital and operational discipline to homes acquired in distressed condition. But the weight of the more recent, more rigorously designed research, studies that track outcomes before and after an acquisition rather than comparing ownership types at a single point in time, has consistently found that when investors take over, staffing tends to fall and mortality tends to rise.</p>
+        </div>
+
+    </div>
+
+    <div class="scrolly-graphic-wrap">
+        <div class="scrolly-graphic">
+
+            <div class="chart-panel" id="panel-1">
+                <div class="chart-title">Cascade Capital Group / Harmony House, Waterloo, Iowa</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot muted"></div>
+                        <div>
+                            <div class="timeline-date">Sept 2024</div>
+                            <div class="timeline-text">Cascade Capital acquires 29 Iowa nursing homes for $85M</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <div class="timeline-date">Oct 2024</div>
+                            <div class="timeline-text">Resident Christine Beenken dies at Harmony House</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <div class="timeline-date">Nov 2024</div>
+                            <div class="timeline-text">State issues a $10,000 fine</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <div class="timeline-date">2026</div>
+                            <div class="timeline-text">Fine remains unpaid</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-note">Source: Iowa Capital Dispatch</div>
+            </div>
+
+            <div class="chart-panel" id="panel-2">
+                <div class="chart-title">Ownership changes, 2016&ndash;2021</div>
+                <div class="log-chart">
+                    <div class="log-bar-col">
+                        <div class="log-bar-value">347</div>
+                        <div class="log-bar dim" style="height: 40px;"></div>
+                        <div class="log-bar-year">Hospitals</div>
+                    </div>
+                    <div class="log-bar-col">
+                        <div class="log-bar-value">3,000+</div>
+                        <div class="log-bar" style="height: 200px;"></div>
+                        <div class="log-bar-year">Nursing homes</div>
+                    </div>
+                </div>
+                <div class="chart-note">Private-equity share of nursing homes: estimates range from 5% (GAO, 2022) to 13% (2025 review). Source: CMS/HHS ASPE data.</div>
+            </div>
+
+            <div class="chart-panel" id="panel-3">
+                <div class="chart-title">The sale-leaseback mechanism</div>
+                <div class="diagram">
+                    <div class="diagram-box">Operator owns the building</div>
+                    <div class="diagram-arrow">↓ sells real estate</div>
+                    <div class="diagram-box highlight">REIT / landlord (e.g. Welltower)</div>
+                    <div class="diagram-arrow">↓ leases it back at fixed rent</div>
+                    <div class="diagram-box">Operator pays rent every month, full or not</div>
+                </div>
+                <div class="chart-note">Source: Center for Economic and Policy Research, on Genesis Healthcare</div>
+            </div>
+
+            <div class="chart-panel" id="panel-4">
+                <div class="chart-title">PE ownership and patient outcomes, 2024 study</div>
+                <div class="bar-row" style="margin-top: 10px;">
+                    <div class="bar-name" style="width: 150px;">Short-term mortality</div>
+                    <div class="bar-track"><div class="bar-fill" style="width: 91%;"></div></div>
+                    <div class="bar-value">+10%</div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-name" style="width: 150px;">Medicare spending</div>
+                    <div class="bar-track"><div class="bar-fill muted" style="width: 100%;"></div></div>
+                    <div class="bar-value">+11%</div>
+                </div>
+                <div class="chart-note">Among patients at private-equity-owned nursing homes vs. others. Source: NBER / The Review of Financial Studies (2024).</div>
+            </div>
+
+            <div class="chart-panel" id="panel-5">
+                <div class="chart-title">Industry pushback vs. the research record</div>
+                <div class="split-panel">
+                    <div class="split-side industry">
+                        <div class="split-label">AHCA / industry position</div>
+                        <p>PE owns &lt;5% of facilities</p>
+                        <p>Top 10 operators hold ~10.7% of beds</p>
+                        <p>Root cause: Medicaid underfunding</p>
+                    </div>
+                    <div class="split-side research">
+                        <div class="split-label">Research findings</div>
+                        <p>2020 COVID study: no significant difference</p>
+                        <p>2024/2025 studies: higher mortality, more deficiencies</p>
+                        <p>Some PE capital does stabilize distressed homes</p>
+                    </div>
+                </div>
+                <div class="chart-note">Sources: AHCA/NCAL; JAMA Network Open (2020); Innovation in Aging (2025)</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer class="end">
+    <p style="max-width: 680px;">For families like the Percharichs, these aren't abstract statistics. They're the difference between adequate staffing and a father found injured, between a fine paid on paper and care actually delivered at the bedside. As for-profit ownership consolidates further, the question facing regulators and lawmakers is no longer whether ownership affects the quality of care, but what, if anything, they intend to do about it.</p>
+</footer>
+
+<div class="disclaimer">
+    <p>This project was completed as coursework for Columbia Journalism School and was not individually fact-checked.</p>
+</div>
+
+<script>
+    const steps = document.querySelectorAll('.step');
+    const panels = document.querySelectorAll('.chart-panel');
+
+    function activate(stepNum) {
+        steps.forEach(s => s.classList.toggle('active', s.dataset.step === String(stepNum)));
+        panels.forEach(p => p.classList.toggle('visible', p.id === 'panel-' + stepNum));
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                activate(entry.target.dataset.step);
+            }
+        });
+    }, { threshold: 0.55 });
+
+    steps.forEach(step => observer.observe(step));
+    activate(1);
+</script>
+
+</body>
+</html>
